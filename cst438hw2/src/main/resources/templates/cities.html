@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+<head>
+<title>City Info</title>
+</head>
+<body>
+
+<div class="table-responsive">
+<h2 class="table">City</h2>
+<div class = "cityInfoContainer" th:if="${cityInfo != null}">
+<div class = "cityInfo" id = "id">ID: <span th:text="${cityInfo.id}"></span></div>
+<div class = "cityInfo" id="name">Name: <span th:text="${cityInfo.name}"></span></div>
+<div class = "cityInfo" id="countryCode">Country Code: <span th:text="${cityInfo.countryCode}"></span></div>
+<div class = "cityInfo" id="countryName">Country Name: <span th:text="${cityInfo.countryName}"></span></div>
+<div class = "cityInfo" id="district">District: <span th:text="${cityInfo.district}"></span></div>
+<div class = "cityInfo" id="population">Population: <span th:text="${#numbers.formatDecimal(cityInfo.population, 0, 'COMMA', 0, 'POINT')}"></span></div>
+<div class = "cityInfo" id="temp">Weather: <span th:text="${cityInfo.temp}"></span> °F</div>
+<div class = "cityInfo" id="time">Local Time: <span th:text="${cityInfo.time}"></span></div>
+
+</div>
+
+<div class = "invalidCity" th:if="${cityInfo == null}">
+No city.
+</div>
+</div>
+
+<br/><br/>
+    For a fabulous weekend get away for 2 to [[${cityInfo.name}]] sign up here. <br/><br/>
+
+    <form action="#" th:action="@{/cities/reservation}" method = "post">
+    Email: <input type="text" id="email" name="email"/> <br/>
+        
+        <input type="radio" id="luxury" name="level" value="luxury"> Luxury $1000 <br/>
+        <input type="radio" id="verygood" name="level" value="verygood"> Very Good $500 <br/>
+        <input type="radio" id="good" name="level" value="good">  Good $350 <br/> <br/>
+        
+        <input type="hidden" id="city" name="city" th:value="*{cityInfo.name}">
+        <input type="submit" value="Submit" />
+    </form>
+</body>
+</html>
